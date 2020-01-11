@@ -7,7 +7,14 @@
   </head>
   <body>
     <h1>Communication avec socket.io !</h1>
+    <div><p style="color:green;">Utilisateurs connectés:<span id="connecteds"></span></p> </div>
     <p>
+      <label>pseudo:</label>
+      <input type="text" placeholder="pseudo" id="pseudo" />
+      <input type="button" value="enregistrer" id="pseudoButton" />
+    </p>
+    <p>
+      <label>message:</label>
       <input type="text" placeholder="message" id="message" />
     </p>
     <p>
@@ -20,6 +27,7 @@
     <script>
       var div=document.getElementById('myDiv');
       var query=document.querySelector('#poke');
+      var connecteds=document.getElementById('connecteds');
       //query.onclick=function(){alert("Vous m'avez cliqué !");};
       //alert(query);
     </script>
@@ -27,20 +35,30 @@
 
     <script>
    var varsocket=io.connect('http://localhost:80');
+   
       varsocket.on('message',function(message){
         div.innerHTML=div.innerHTML+"<br>"+message
       
     })
+    varsocket.on('connecteds',function(connect){
+      connecteds.innerHTML=connect;
+      
+    })
     var button=document.getElementById("poke")
+    var messInput=document.getElementById('message');
+    var pseudoInput=document.getElementById('pseudo');
     button.onclick=function(){
-      var messInput=document.getElementById('message');
+      
         div.innerHTML=div.innerHTML+'<br><p style="color:red;">'+messInput.value+"</p>"
         varsocket.emit("message",messInput.value)
         //varsocket.emit('message','Salut serveur, ça va ?');
         console.log(messInput.value)
         messInput.value='';
       };
-    
+      var pseudoButton=document.getElementById('pseudoButton')
+      pseudoButton.onclick=function(){
+        varsocket.emit("pseudo",pseudoInput.value)
+      };
     
       
     </script>
