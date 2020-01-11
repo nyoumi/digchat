@@ -14,7 +14,7 @@ io.sockets.on("connection",function (socket){
     console.log('Un client est connecté !')
     socket.broadcast.emit('message','Un autre client vient de se connecter !');
     socket.on('message',function(message){
-        console.log('Un client me parle ! Il me dit : '+message);
+        console.log('Message Client: '+message);
         socket.broadcast.emit('message',message)
     });
 })
