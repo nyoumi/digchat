@@ -34,7 +34,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
-   var varsocket=io.connect('http://localhost:80');
+   var varsocket=io.connect('http://localhost:8081');
    
       varsocket.on('message',function(message){
         div.innerHTML=div.innerHTML+"<br>"+message
