@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <metacharset="utf-8"/>
+    <title>Socket.io</title>
+    <link rel="stylesheet" href="index.css">
+
+  </head>
+  <body>
+    <h1>Communication avec socket.io !</h1>
+    <p>
+      <input type="text" placeholder="message" id="message" />
+    </p>
+    <p>
+      <input type="button" value="envoyer" id="poke" />
+    </p>
+
+    <div id="myDiv">
+      <p>liste des messages</p>
+    </div>
+    <script>
+      var div=document.getElementById('myDiv');
+      var query=document.querySelector('#poke');
+      //query.onclick=function(){alert("Vous m'avez cliqué !");};
+      //alert(query);
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+   var varsocket=io.connect('http://localhost:80');
+      varsocket.on('message',function(message){
+        div.innerHTML=div.innerHTML+"<br>"+message
+      
+    })
+    var button=document.getElementById("poke")
+    button.onclick=function(){
+      var messInput=document.getElementById('message');
+        div.innerHTML=div.innerHTML+'<br><p style="color:red;">'+messInput.value+"</p>"
+        varsocket.emit("message",messInput.value)
+        //varsocket.emit('message','Salut serveur, ça va ?');
+        console.log(messInput.value)
+        messInput.value='';
+      };
+    
+    
+      
+    </script>
+  </body>
+</html>
